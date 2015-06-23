@@ -3,7 +3,7 @@ var Tweets = new Mongo.Collection('tweets');
 var tokenizer = Meteor.npmRequire('sbd');
 
 Tweets.before.insert(function(userId, doc) {
-  var sentences = tokenizer.sentences(doc.text);
+  var sentences = tokenizer.sentences(doc.text).map(_.unescape);
   var text0 = sentences.slice(0, sentences.length / 2).join(' ') || Meteor.settings.imgflip.top_text;
   var text1 = sentences.slice(sentences.length / 2).join(' ') || Meteor.settings.imgflip.bottom_text;
 
